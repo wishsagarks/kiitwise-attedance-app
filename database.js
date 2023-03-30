@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const db = "mongodb+srv://freaking_wish:kiit@cluster0.mw8a7.mongodb.net/?retryWrites=true&w=majority";
+const db = "mongodb+srv://freaking_wish:kiit@cluster0.mw8a7.mongodb.net/kisap?retryWrites=true&w=majority";
 
 
 const connectDB = async () => {
