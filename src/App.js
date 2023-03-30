@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/generateOTP" element={<GenerateOTP></GenerateOTP>} />
-        <Route path="/submitAttendance" component={<SubmitAttendance></SubmitAttendance>} />
+        <Route path="/" component={<SubmitAttendance></SubmitAttendance>} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const GenerateOTP = () => {
   const [otp, setOtp] = useState(null);
 
@@ -8,6 +9,15 @@ const GenerateOTP = () => {
     const newOtp = Math.floor(100000 + Math.random() * 900000);
     setOtp(newOtp);
 
+    
+    if ("geolocation" in navigator) {
+ 
+      console.log("location connected");
+    } else {
+      console.log("location Not Available");
+    }
+
+ 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const lat = position.coords.latitude;
@@ -44,5 +54,7 @@ const GenerateOTP = () => {
     </div>
   );
 };
+
+
 
 export default GenerateOTP;
