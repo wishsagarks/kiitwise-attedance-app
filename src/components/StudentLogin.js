@@ -10,7 +10,7 @@ const StudentLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/studentLogin/login", { roll_no, password });
+      const response = await axios.post("http://localhost:5000/api/studentLogin/login", { roll_no, password });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Error logging in");
