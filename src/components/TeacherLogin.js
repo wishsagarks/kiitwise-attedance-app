@@ -23,7 +23,7 @@ const TeacherLogin = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      setMessage('An error occurred. Please try again.');
+      setMessage('Error in input');
     }
   };
 
