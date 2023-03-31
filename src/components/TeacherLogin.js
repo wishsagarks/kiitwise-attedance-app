@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import '../assets/styles/login.css'
 import {
   MDBBtn,
@@ -38,6 +39,7 @@ const TeacherLogin = () => {
   };
 
   return (
+
     // <div>
     //   <h1>Teacher Login</h1>
     //   <form onSubmit={handleSubmit}>
@@ -101,6 +103,31 @@ const TeacherLogin = () => {
     </MDBRow>
 
   </MDBContainer>
+
+    <div>
+      <h1>Teacher Login</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Email:</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <br />
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <br />
+        <button type="submit">Login</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
+
   );
 };
 

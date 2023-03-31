@@ -1,15 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import GenerateOTP from './components/GenerateOTP';
-import SubmitAttendance from './components/SubmitAttendance';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import GenerateOTP from "./components/GenerateOTP";
+import SubmitAttendance from "./components/SubmitAttendance";
+import TeacherLogin from "./components/TeacherLogin";
+import StudentLogin from './components/StudentLogin';
+
+// Inside your
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/generateOTP" element={<GenerateOTP></GenerateOTP>} />
-        <Route path="/" component={<SubmitAttendance></SubmitAttendance>} />
-      </Routes>
+
+      <div>
+        <Routes>
+          <Route path="/teacherLogin" element={<TeacherLogin></TeacherLogin>} />
+          <Route path="/student-login" element={<StudentLogin></StudentLogin>} />
+          <Route path="/generateOTP" element={<GenerateOTP></GenerateOTP>} />
+        <Route path="/submitAttendance" element={<SubmitAttendance></SubmitAttendance>} />
+        <Route path="/student-login" element={<StudentLogin></StudentLogin>} />
+        </Routes>
+      </div>
     </Router>
   );
 }

@@ -32,22 +32,15 @@ const GenerateOTP = () => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        // eslint-disable-next-line
-        const response = await axios.get('https://ip-geo-location-and-ip-reputation.p.rapidapi.com/', {
-          headers: {
-            'X-RapidAPI-Key': '98f139625emsh4c9f7b4f0e29f81p1553dcjsndbb273a68cba',
-            'X-RapidAPI-Host': 'ip-geo-location-and-ip-reputation.p.rapidapi.com',
-          },
-        });
-
+       
         const teacherData = {
           OTP: newOtp,
           latitude: lat,
           longitude: lon,
         };
 
-        // Replace with your backend API endpoint
-        await axios.post('/api/teachers', teacherData);
+        // Replace with backend API endpoint
+        await axios.post('http://localhost:5000/api/teachers/generateOTP', teacherData);
       },
       (error) => {
         console.log(error);
