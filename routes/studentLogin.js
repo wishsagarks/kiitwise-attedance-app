@@ -1,37 +1,32 @@
 const express = require("express");
 const router = express.Router();
-const StudentLogin = require("../models/studentLogin");
+const Student = require("../models/StudentCredentials");
 const bcrypt = require("bcrypt");
 
-router.post("/register", async (req, res) => {
-  const { roll_no, password } = req.body;
-  const newStudent = new StudentLogin({ roll_no, password });
-
-  try {
-    await newStudent.save();
-    res.status(201).json({ message: "Student registered successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Error registering student", error });
-  }
-});
-
 router.post("/login", async (req, res) => {
-  const { roll_no, password } = req.body;
+  const { email, password } = req.body;
+
+  console.log("Received login request:", req.body);
 
   try {
-    const student = await StudentLogin.findOne({ roll_no });
+    const student = await Student.findOne({ email });
+
     if (!student) {
-      return res.status(400).json({ message: "Invalid roll number or password" });
+      console.log("Email not found");
+      return res.status(400).json({ message: "Email not found" });
     }
 
     const isMatch = await bcrypt.compare(password, student.password);
+
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid roll number or password" });
+      console.log("Wrong password");
+      return res.status(400).json({ message: "Wrong password" });
     }
 
-    res.status(200).json({ message: "Student logged in successfully" });
+    res.json({ message: "Logged in successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
