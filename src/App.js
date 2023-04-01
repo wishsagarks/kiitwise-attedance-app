@@ -4,8 +4,8 @@ import GenerateOTP from "./components/GenerateOTP";
 import SubmitAttendance from "./components/SubmitAttendance";
 import TeacherLogin from "./components/TeacherLogin";
 import StudentLogin from './components/StudentLogin';
+import NotFound from './components/NotFound';
 
-// Inside your
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <Route path="/generateOTP" element={<GenerateOTP></GenerateOTP>} />
         <Route path="/submitAttendance" element={<SubmitAttendance></SubmitAttendance>} />
         <Route path="/student-login" element={<StudentLogin></StudentLogin>} />
+        <Route path="*" element={<NotFound></NotFound>} />
         </Routes>
       </div>
     </Router>

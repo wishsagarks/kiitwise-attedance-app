@@ -21,7 +21,7 @@ router.post('/submitAttendance', async (req, res) => {
     );
 
     //  if the student is within 5 meters of the teacher
-    if (distance <= 1) {
+    if (distance <= 0.1) {
       // Marked the student as present
       const attendanceStatus = 'Present';
       // Saved attendance data in the database
@@ -36,7 +36,7 @@ router.post('/submitAttendance', async (req, res) => {
 
       await newStudent.save();
       // console log message
-  console.log(`Attendance successful: ${attendanceStatus}, OTP: ${OTP}, Latitude: ${latitude},Longitude: ${longitude}`);
+  console.log(`Attendance successful: distance:${distance},${attendanceStatus}, OTP: ${OTP}, Latitude: ${latitude},Longitude: ${longitude}`);
       res.json({ message: 'Present' });
     } else {
       res.json({ message: 'Absent - away from class' });
