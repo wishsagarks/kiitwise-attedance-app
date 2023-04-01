@@ -2,33 +2,46 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const SubmitAttendance = () => {
-  const [otp, setOtp] = useState('');
-  const [rollNumber, setRollNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [OTP, setOTP] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!navigator.geolocation) {
+      setMessage('Geolocation is not supported by your browser');
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+        const { latitude, longitude } = position.coords;
 
-        const studentData = {
-          roll_no: rollNumber,
-          OTP: otp,
-          latitude: lat,
-          longitude: lon,
-        };
+        try {
+          const response = await axios.post('http://localhost:5000/api/students/submitAttendance', {
+            email,
+            OTP,
+            latitude,
+            longitude,
+          });
 
-        // Replace with  backend API endpoint
-        const response = await axios.post('http://localhost:5000/api/students/submitAttendance',studentData);
-
-        setMessage(response.data.message);
+          if (response.data.message === 'Present') {
+            
+            setMessage('You are Present');
+          } else if (response.data.message === 'Absent - away from class') {
+            setMessage('Away from class');
+          } else {
+            setMessage('Invalid OTP');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          setMessage('Error in input');
+        }
       },
-      (error) => {
-        console.log(error);
-      },
+      (err) => {
+        setMessage('Error obtaining location');
+      }
     );
   };
 
@@ -36,25 +49,25 @@ const SubmitAttendance = () => {
     <div>
       <h1>Submit Attendance</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="rollNumber">Roll Number:</label>
+        <label>Email:</label>
         <input
-          type="text"
-          id="rollNumber"
-          value={rollNumber}
-          onChange={(e) => setRollNumber(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <br />
-        <label htmlFor="otp">OTP:</label>
+        <label>OTP:</label>
         <input
           type="text"
-          id="otp"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
+          value={OTP}
+          onChange={(e) => setOTP(e.target.value)}
+          required
         />
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit">Submit Attendance</button>
       </form>
-      {message && <h3>{message}</h3>}
+      {message && <p>{message}</p>}
     </div>
   );
 };
