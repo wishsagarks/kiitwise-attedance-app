@@ -1,6 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const Teacher = require('../models/Teacher');
+router.get("/:teacherId", async (req, res) => {
+  try {
+    const teacher = await Teacher.findById(req.params.teacherId);
+    if (teacher) {
+      res.json(teacher);
+    } else {
+      res.status(404).json({ message: "Teacher not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching teacher data" });
+  }
+});
 
 router.post('/generateOTP', async (req, res) => {
   const { teacherId, otp, latitude, longitude } = req.body;
