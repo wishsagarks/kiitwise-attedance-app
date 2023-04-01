@@ -1,9 +1,42 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const TeacherSchema = new mongoose.Schema({
-   
-    OTP: Number,
-    latitude: Number,
-    longitude: Number
-})
-module.exports = mongoose.model("Teacher" ,TeacherSchema);
+const teacherSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  teacherId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  subject: {
+    type: [String],
+    required: true,
+  },
+  section: {
+    type: [String],
+    required: true,
+  },
+  otp: {
+    type: String,
+    default: null,
+  },
+  longitude: {
+    type: Number,
+    default: null,
+  },
+  latitude: {
+    type: Number,
+    default: null,
+  },
+});
+
+const Teacher = mongoose.model("Teacher", teacherSchema);
+
+module.exports = Teacher;

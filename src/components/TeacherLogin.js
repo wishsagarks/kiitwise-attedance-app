@@ -8,16 +8,16 @@ const TeacherLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post('http://localhost:5000/api/teacherLogin/login', {
         email,
         password,
       });
-
+  
       if (response.data.message === 'Logged in successfully') {
         // Redirect to the GenerateOTP page
-        window.location.href = '/generateOTP';
+        window.location.href = `/generateOTP/${response.data.teacherId}`;
       } else {
         setMessage(response.data.message);
       }
@@ -26,6 +26,7 @@ const TeacherLogin = () => {
       setMessage('Error in input');
     }
   };
+  
 
   return (
     <div>

@@ -6,10 +6,27 @@ const TeacherCredentialsSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
+  name: {
     type: String,
     required: true,
   },
+  teacherId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  subject: {
+    type: [String],
+    required: true,
+  },
+  section: {
+    type: [String],
+    required: true,
+  },
+  password:{
+    type:String,
+    required:true,
+  }
 });
 
 module.exports = mongoose.model("TeacherCredentials", TeacherCredentialsSchema);

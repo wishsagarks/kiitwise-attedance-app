@@ -4,7 +4,7 @@ const Teacher = require("../models/TeacherCredentials");
 const bcrypt = require("bcrypt");
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,} = req.body;
 
   console.log("Received login request:", req.body); // Log the received data
 
