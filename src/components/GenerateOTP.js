@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -7,16 +7,14 @@ const GenerateOTP = () => {
   const [teacher, setTeacher] = useState(null);
   const [subject, setSubject] = useState('');
   const [section, setSection] = useState('');
+  const [otp, setOtp] = useState('');
 
   useEffect(() => {
     const fetchTeacher = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}`);
-        setTeacher(response.data);
-      } catch (error) {
-        console.error('Error fetching teacher:', error);
-      }
+      const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}`);
+      setTeacher(response.data);
     };
+
     fetchTeacher();
   }, [teacherId]);
 
@@ -28,54 +26,41 @@ const GenerateOTP = () => {
     setSection(e.target.value);
   };
 
-  const handleGenerateOTP = async () => {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const { latitude, longitude } = position.coords;
-      try {
-        const response = await axios.post(`http://localhost:5000/api/teachers/${teacherId}/generateOTP`, {
+  const handleGenerateOtp = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const response = await axios.patch(`http://localhost:5000/api/teachers/${teacherId}/generateOTP`, {
           subject,
           section,
+          otp: Math.floor(100000 + Math.random() * 900000).toString(),
           latitude,
           longitude,
         });
-        alert(`OTP generated: ${response.data.otp}`);
-      } catch (error) {
-        console.error('Error generating OTP:', error);
-      }
-    });
+        setOtp(response.data.otp);
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
   };
-
-  if (!teacher) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div>
-      <h1>Hello, {teacher.name}</h1>
-      <h2>Choose subject:</h2>
+      {teacher && <h1>Hello, {teacher.name}</h1>}
+      <label>Subject:</label>
       <select value={subject} onChange={handleSubjectChange}>
-        <option value="">Select subject</option>
-        {teacher.subject.map((s, i) => (
-          <option key={i} value={s}>
-            {s}
-          </option>
-        ))}
+        <option value="">Select a subject</option>
+        {teacher && teacher.subject.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
       </select>
-      <h2>Choose section:</h2>
+      <br />
+      <label>Section:</label>
       <select value={section} onChange={handleSectionChange}>
-        <option value="">Select section</option>
-        {teacher.section.map((s, i) => (
-          <option key={i} value={s}>
-            {s}
-          </option>
-        ))}
+        <option value="">Select a section</option>
+        {teacher && teacher.section.map((sec) => <option key={sec} value={sec}>{sec}</option>)}
       </select>
-      <button onClick={handleGenerateOTP}>Generate OTP</button>
+      <br />
+      <button onClick={handleGenerateOtp}>Generate OTP</button>
+      {otp && <p>Your OTP is: {otp}</p>}
     </div>
   );
 };

@@ -1,33 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const Teacher = require('../models/teacher');
+const Teacher = require('../models/Teacher');
 
-router.get('/teacher-login', async (req, res) => {
-  // Replace this with your own authentication and teacher fetching logic
-  const teacher = await Teacher.findOne({ email: 'teacher1@example.com' });
-  res.json(teacher);
-});
+router.post('/generateOTP', async (req, res) => {
+  const { teacherId, otp, latitude, longitude } = req.body;
 
-router.post('/generateOtp', async (req, res) => {
-  const { subject, section, longitude, latitude } = req.body;
+  try {
+    const teacher = await Teacher.findOne({ teacherId });
 
-  // Replace this with your own authentication and teacher fetching logic
-  const teacher = await Teacher.findOne({ email: 'teacher1@example.com' });
+    if (!teacher) {
+      return res.status(400).json({ message: 'Teacher not found' });
+    }
 
-  const otp = Math.floor(100000 + Math.random() * 900000);
-  teacher.otp = otp;
-  
-  // Save the actual location data
-  teacher.longitude = longitude;
-  teacher.latitude = latitude;
+    teacher.otp = otp;
+    teacher.latitude = latitude;
+    teacher.longitude = longitude;
 
-  // Save the subject and section
-  teacher.subject = subject;
-  teacher.section = section;
+    await teacher.save();
 
-  await teacher.save();
-
-  res.json({ otp });
+    res.status(200).json({ message: 'OTP and location saved successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 module.exports = router;

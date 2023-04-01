@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TeacherLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post('http://localhost:5000/api/teacherLogin/login', {
         email,
         password,
       });
-  
+
       if (response.data.message === 'Logged in successfully') {
-        // Redirect to the GenerateOTP page
-        window.location.href = `/generateOTP/${response.data.teacherId}`;
+        navigate(`/generateOTP/${response.data.teacherId}`);
       } else {
         setMessage(response.data.message);
       }
@@ -26,7 +27,6 @@ const TeacherLogin = () => {
       setMessage('Error in input');
     }
   };
-  
 
   return (
     <div>
