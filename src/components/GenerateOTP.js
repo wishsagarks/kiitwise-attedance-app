@@ -11,10 +11,10 @@ const GenerateOTP = () => {
 
   useEffect(() => {
     const fetchTeacher = async () => {
-      const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}`);
+      const response = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
       setTeacher(response.data);
     };
-
+  
     fetchTeacher();
   }, [teacherId]);
 
