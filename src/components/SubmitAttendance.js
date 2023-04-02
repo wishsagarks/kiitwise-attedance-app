@@ -1,72 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const SubmitAttendance = () => {
-  const [email, setEmail] = useState('');
-  const [OTP, setOTP] = useState('');
+  const { studentId } = useParams();
+  const [student, setStudent] = useState(null);
+  const [subject, setSubject] = useState('');
+  const [section, setSection] = useState('');
+  const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const fetchStudent = async () => {
+      const response = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
+      setStudent(response.data);
+    };
 
-    if (!navigator.geolocation) {
-      setMessage('Geolocation is not supported by your browser');
-      return;
-    }
+    fetchStudent();
+  }, [studentId]);
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
+  const handleSubjectChange = (e) => {
+    setSubject(e.target.value);
+  };
+
+  const handleSectionChange = (e) => {
+    setSection(e.target.value);
+  };
+
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
+
+  const handleSubmitAttendance = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
 
-        try {
-          const response = await axios.post('http://localhost:5000/api/students/submitAttendance', {
-            email,
-            OTP,
-            latitude,
-            longitude,
-          });
-
-          if (response.data.message === 'Present') {
-            
-            setMessage('You are Present');
-          } else if (response.data.message === 'Absent - away from class') {
-            setMessage('Away from class');
-          } else {
-            setMessage('Invalid OTP');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          setMessage('Error in input');
-        }
-      },
-      (err) => {
-        setMessage('Error obtaining location');
-      }
-    );
+        const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
+          studentId,
+          subject,
+          section,
+          otp,
+          latitude,
+          longitude,
+        });
+        setMessage(response.data.message);
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
   };
 
   return (
     <div>
-      <h1>Submit Attendance</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <br />
-        <label>OTP:</label>
-        <input
-          type="text"
-          value={OTP}
-          onChange={(e) => setOTP(e.target.value)}
-          required
-        />
-        <br />
-        <button type="submit">Submit Attendance</button>
-      </form>
+      {student && <h1>Hello, {student.name}</h1>}
+      <label>Subject:</label>
+      <select value={subject} onChange={handleSubjectChange}>
+        <option value="">Select a subject</option>
+        {student && student.subject.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
+      </select>
+      <br />
+      <label>Section:</label>
+      <select value={section} onChange={handleSectionChange}>
+        <option value="">Select a section</option>
+        {student && student.section.map((sec) => <option key={sec} value={sec}>{sec}</option>)}
+      </select>
+      <br />
+      <label>OTP:</label>
+      <input type="text" value={otp} onChange={handleOtpChange} />
+      <br />
+      <button onClick={handleSubmitAttendance}>Submit Attendance</button>
+      <br />
       {message && <p>{message}</p>}
     </div>
   );

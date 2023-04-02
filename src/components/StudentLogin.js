@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const StudentLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,9 +17,8 @@ const StudentLogin = () => {
         password,
       });
 
-     
       if (response.data.message === 'Logged in successfully') {
-        navigate(`/SubmitAttedance/${response.data.teacherId}`);
+        navigate(`/submitAttendance/${response.data.teacherId}`);
       } else {
         setMessage(response.data.message);
       }
