@@ -18,7 +18,6 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid password' });
     }
-    console.log(student.studentId);
     res.status(200).json({ message: 'Logged in successfully', studentId: student.studentId });
     
   } catch (error) {

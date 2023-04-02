@@ -36,8 +36,12 @@ const SubmitAttendance = () => {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
 
+        const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
+        const studentDetails = studentDetailsResponse.data;         
+        console.log(studentDetails); 
         const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
-          studentId,
+          ...studentDetails, 
+        studentId,
           subject,
           section,
           otp,
@@ -57,13 +61,13 @@ const SubmitAttendance = () => {
       <label>Subject:</label>
       <select value={subject} onChange={handleSubjectChange}>
         <option value="">Select a subject</option>
-        {student && student.subject.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
+        {student && student.subject.map((sub, index) => <option key={index} value={sub}>{sub}</option>)}
       </select>
       <br />
       <label>Section:</label>
       <select value={section} onChange={handleSectionChange}>
         <option value="">Select a section</option>
-        {student && student.section.map((sec) => <option key={sec} value={sec}>{sec}</option>)}
+        {student && student.section.map((sec, index) => <option key={index} value={sec}>{sec}</option>)}
       </select>
       <br />
       <label>OTP:</label>
