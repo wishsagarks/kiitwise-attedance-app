@@ -4,13 +4,13 @@ const StudentCredentials = require('../models/StudentCredentials');
 const Student = require('../models/student');
 const Teacher = require('../models/teacher');
 
-router.get('/details/:studentId', async (req, res) => {
+router.get('/details/:teacherId', async (req, res) => {
   try {
-    const student = await StudentCredentials.findOne({ studentId: req.params.studentId });
-    if (student) {
-      res.json(student);
+    const teacher = await StudentCredentials.findOne({ teacherId: req.params.teacherId });
+    if (teacher) {
+      res.json(teacher);
     } else {
-      res.status(404).send('Student not found');
+      res.status(404).send('Teacher not found');
     }
   } catch (error) {
     res.status(500).send(error);

@@ -24,7 +24,6 @@ const students = [
     section: ['A', 'C'],
   },
 ];
-
 async function saveStudents() {
   for (const studentData of students) {
     const hashedPassword = await bcrypt.hash(studentData.password, 10);
@@ -47,3 +46,4 @@ async function saveStudents() {
 }
 
 saveStudents();
+

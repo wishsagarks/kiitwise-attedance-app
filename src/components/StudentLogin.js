@@ -18,7 +18,7 @@ const StudentLogin = () => {
       });
 
       if (response.data.message === 'Logged in successfully') {
-        navigate(`/submitAttendance/${response.data.teacherId}`);
+        navigate(`/submitAttendance/${response.data.studentId}`);
       } else {
         setMessage(response.data.message);
       }
