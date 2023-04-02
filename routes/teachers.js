@@ -6,40 +6,45 @@ const Teacher = require('../models/teacher');
 
 router.get('/details/:teacherId', async (req, res) => {
   try {
-    const teacher = await TeacherCredentials.findById(req.params.teacherId);
-    if (!teacher) {
-      return res.status(404).json({ message: 'Teacher not found' });
+    const teacher = await TeacherCredentials.findOne({ teacherId: req.params.teacherId });
+    if (teacher) {
+      
+      res.json(teacher);
+    } else {
+      res.status(404).send('Teacher not found');
     }
-    res.json(teacher);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).send(error);
   }
 });
 
 
 
-router.patch('/:teacherId/generateOTP', async (req, res) => {
-  const teacherId = req.params.teacherId;
+
+router.patch('/teachers/:id/generateOTP', async (req, res) => {
+  const teacherId = req.params.id;
   const { subject, section, otp, latitude, longitude } = req.body;
 
   try {
-    const teacher = await Teacher.findOne({ teacherId });
-    if (teacher) {
-      teacher.subject = subject;
-      teacher.section = section;
-      teacher.otp = otp;
-      teacher.latitude = latitude;
-      teacher.longitude = longitude;
-      await teacher.save();
-      res.json({ message: 'OTP and location updated successfully', otp });
-    } else {
-      res.status(404).json({ message: 'Teacher not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating teacher data' });
+    const teacher = await Teacher.findById(teacherId);
+
+    if (subject) teacher.subject = subject;
+    if (section) teacher.section = section;
+    if (otp) teacher.otp = otp;
+    if (latitude) teacher.latitude = latitude;
+    if (longitude) teacher.longitude = longitude;
+
+    const updatedTeacher = await teacher.save();
+
+    res.status(200).json({ status: 'success', data: updatedTeacher });
+  } catch (err) {
+    console.warn(`Error updating teacher data: ${err}`);
+    res.status(500).json({ status: 'error', message: 'Error updating teacher data' });
   }
 });
+
+
+
 
 
 module.exports = router;

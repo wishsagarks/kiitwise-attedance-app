@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const TeacherCredentialsSchema = new mongoose.Schema({
+ 
   email: {
     type: String,
     required: true,
@@ -10,11 +11,14 @@ const TeacherCredentialsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  teacherId: {
+  teacherId:  {
+    _id:String,
     type: String,
     required: true,
     unique: true,
+  
   },
+ 
   subject: {
     type: [String],
     required: true,
@@ -29,4 +33,6 @@ const TeacherCredentialsSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("TeacherCredentials", TeacherCredentialsSchema);
+const TeacherCredentials = mongoose.model('TeacherCredentials', TeacherCredentialsSchema);
+
+module.exports = TeacherCredentials;

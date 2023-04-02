@@ -12,8 +12,6 @@ app.use(express.json());
 app.use("/api/teachers", teacherRouter);
 app.use("/api/teacherLogin", teacherLoginRoutes);
 
-
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
