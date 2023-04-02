@@ -8,13 +8,14 @@ const GenerateOTP = () => {
   const [subject, setSubject] = useState('');
   const [section, setSection] = useState('');
   const [otp, setOtp] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchTeacher = async () => {
       const response = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
       setTeacher(response.data);
     };
-  
+
     fetchTeacher();
   }, [teacherId]);
 
@@ -30,7 +31,11 @@ const GenerateOTP = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
+        const teacherDetailsResponse = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
+        const teacherDetails = teacherDetailsResponse.data;
+
         const response = await axios.patch(`http://localhost:5000/api/teachers/${teacherId}/generateOTP`, {
+          ...teacherDetails,
           subject,
           section,
           otp: Math.floor(100000 + Math.random() * 900000).toString(),
@@ -38,6 +43,7 @@ const GenerateOTP = () => {
           longitude,
         });
         setOtp(response.data.otp);
+        setMessage(response.data.message);
       });
     } else {
       alert('Geolocation is not supported by this browser.');
@@ -61,6 +67,7 @@ const GenerateOTP = () => {
       <br />
       <button onClick={handleGenerateOtp}>Generate OTP</button>
       {otp && <p>Your OTP is: {otp}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
 };

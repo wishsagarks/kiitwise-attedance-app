@@ -3,12 +3,10 @@ const router = express.Router();
 const TeacherCredentials = require('../models/TeacherCredentials');
 const Teacher = require('../models/teacher');
 
-
 router.get('/details/:teacherId', async (req, res) => {
   try {
     const teacher = await TeacherCredentials.findOne({ teacherId: req.params.teacherId });
     if (teacher) {
-      
       res.json(teacher);
     } else {
       res.status(404).send('Teacher not found');
@@ -18,32 +16,45 @@ router.get('/details/:teacherId', async (req, res) => {
   }
 });
 
-
-
-
-router.patch('/teachers/:id/generateOTP', async (req, res) => {
-  const teacherId = req.params.id;
-  const { subject, section, otp, latitude, longitude } = req.body;
-
+//  route handler
+// Updated route handler
+router.patch('/:teacherId/generateOTP', async (req, res) => {
   try {
-    const teacher = await Teacher.findById(teacherId);
+    const teacherId = req.params.teacherId;
+    const { subject, section, otp, latitude, longitude } = req.body;
 
-    if (subject) teacher.subject = subject;
-    if (section) teacher.section = section;
-    if (otp) teacher.otp = otp;
-    if (latitude) teacher.latitude = latitude;
-    if (longitude) teacher.longitude = longitude;
+    // Find the teacher's credentials by teacherId
+    const teacherCredential = await TeacherCredentials.findOne({ teacherId });
 
-    const updatedTeacher = await teacher.save();
+    if (!teacherCredential) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
 
-    res.status(200).json({ status: 'success', data: updatedTeacher });
-  } catch (err) {
-    console.warn(`Error updating teacher data: ${err}`);
-    res.status(500).json({ status: 'error', message: 'Error updating teacher data' });
+    // Update or create the teacher document with the fetched data and the new otp and location
+    const updatedTeacher = await Teacher.findOneAndUpdate(
+      { teacherId },
+      {
+        $set: {
+          name: teacherCredential.name,
+          email: teacherCredential.email,
+          subject,
+          section,
+          otp,
+          location: {
+            type: 'Point',
+            coordinates: [latitude, longitude],
+          },
+        },
+      },
+      { upsert: true, new: true }
+    );
+
+    res.status(200).json({ message: 'OTP generated successfully', otp, teacher: updatedTeacher });
+  } catch (error) {
+    console.error('Error generating OTP:', error);
+    res.status(500).json({ message: 'Error generating OTP', error });
   }
 });
-
-
 
 
 
