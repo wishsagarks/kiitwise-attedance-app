@@ -23,6 +23,7 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
   try {
     const teacherId = req.params.teacherId;
     const { subject, section, otp, latitude, longitude } = req.body;
+    console.log(latitude);
 
     // Find the teacher's credentials by teacherId
     const teacherCredential = await TeacherCredentials.findOne({ teacherId });
@@ -41,13 +42,12 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
         subject,
         section,
         otp,
-        location: {
-          type: 'Point',
-          coordinates: [latitude, longitude],
-        },
+        longitude,
+        latitude,
       },
       { new: true, upsert: true }
     );
+    console.log(longitude);
     res.status(200).json({ message: 'OTP generated successfully', otp, teacher: updatedTeacher });
   } catch (error) {
     console.error('Error generating OTP:', error);
