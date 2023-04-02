@@ -18,6 +18,7 @@ router.get('/details/:teacherId', async (req, res) => {
 
 //  route handler
 // Updated route handler
+// Updated route handler
 router.patch('/:teacherId/generateOTP', async (req, res) => {
   try {
     const teacherId = req.params.teacherId;
@@ -30,31 +31,31 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
       return res.status(404).json({ message: 'Teacher not found' });
     }
 
-    // Update or create the teacher document with the fetched data and the new otp and location
+    // Update the existing Teacher document with the new otp and location
     const updatedTeacher = await Teacher.findOneAndUpdate(
       { teacherId },
       {
-        $set: {
-          name: teacherCredential.name,
-          email: teacherCredential.email,
-          subject,
-          section,
-          otp,
-          location: {
-            type: 'Point',
-            coordinates: [latitude, longitude],
-          },
+        name: teacherCredential.name,
+        email: teacherCredential.email,
+        teacherId,
+        subject,
+        section,
+        otp,
+        location: {
+          type: 'Point',
+          coordinates: [latitude, longitude],
         },
       },
-      { upsert: true, new: true }
+      { new: true, upsert: true }
     );
-
     res.status(200).json({ message: 'OTP generated successfully', otp, teacher: updatedTeacher });
   } catch (error) {
     console.error('Error generating OTP:', error);
     res.status(500).json({ message: 'Error generating OTP', error });
   }
 });
+
+
 
 
 
