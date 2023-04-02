@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const StudentLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,9 +17,9 @@ const StudentLogin = () => {
         password,
       });
 
+     
       if (response.data.message === 'Logged in successfully') {
-        // Redirect to the SubmitAttendance page
-        window.location.href = '/submitAttendance';
+        navigate(`/SubmitAttedance/${response.data.teacherId}`);
       } else {
         setMessage(response.data.message);
       }

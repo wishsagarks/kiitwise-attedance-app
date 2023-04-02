@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const StudentCredentialsSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -22,10 +27,7 @@ const StudentCredentialsSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-  teacherId: {
-    type: String,
-    
-  },
 });
 
-module.exports = mongoose.model('StudentCredentials', StudentCredentialsSchema);
+const StudentCredentials = mongoose.model('StudentCredentials', StudentCredentialsSchema);
+module.exports = StudentCredentials;
