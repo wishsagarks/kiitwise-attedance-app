@@ -38,7 +38,6 @@ const SubmitAttendance = () => {
 
         const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
         const studentDetails = studentDetailsResponse.data;         
-        console.log(studentDetails); 
         const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
           ...studentDetails, 
         studentId,
