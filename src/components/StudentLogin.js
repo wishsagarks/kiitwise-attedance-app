@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './styles/StudentLogin.css';
 
 const StudentLogin = () => {
   const [email, setEmail] = useState('');
@@ -29,7 +30,9 @@ const StudentLogin = () => {
   };
 
   return (
-    <div>
+    <div className="student-login-wrapper">
+      
+    <div className='App'>
       <h1>Student Login</h1>
       <form onSubmit={handleSubmit}>
         <label>Email:</label>
@@ -52,7 +55,26 @@ const StudentLogin = () => {
       </form>
       {message && <p>{message}</p>}
     </div>
+    </div>
+  );
+};
+const StudentLoginWithBackground = (props) => {
+  const backgroundStyle = {
+    fontFamily: 'Dosis, sans-serif',
+    backgroundImage: 'linear-gradient(140deg, rgb(219, 98, 65) 0%, rgb(229, 91, 141) 100%)',
+    height: '100vh',
+    width:'100vw',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  return (
+    <div style={backgroundStyle}>
+      <StudentLogin {...props} />
+    </div>
   );
 };
 
-export default StudentLogin;
+export default StudentLoginWithBackground;
