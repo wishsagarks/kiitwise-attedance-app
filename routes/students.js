@@ -34,12 +34,12 @@ router.post('/:studentId/submitAttendance', async (req, res) => {
     const teacher = await Teacher.findOne({ subject, section, otp });
 
     if (!teacher) {
-      return res.status(404).json({ message: 'Invalid OTP' });
+      return res.status(400).json({ message: 'Invalid OTP' }); // Change the status code here to 400
     }
 
-    // Check if the student is within 5 centimeters of the teacher
+    // Check if the student is within 5 memeter of the teacher
     const distance = getDistance(latitude, longitude, teacher.latitude, teacher.longitude);
-    if (distance > 0.05) {
+    if (distance > 5) {
       return res.status(400).json({ message: 'You are too far from the teacher. Attendance not submitted.' });
     }
 

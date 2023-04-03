@@ -35,24 +35,33 @@ const SubmitAttendance = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
-
-        const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
-        const studentDetails = studentDetailsResponse.data;         
-        const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
-          ...studentDetails, 
-        studentId,
-          subject,
-          section,
-          otp,
-          latitude,
-          longitude,
-        });
-        setMessage(response.data.message);
+  
+        try {
+          const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
+          const studentDetails = studentDetailsResponse.data;
+          const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
+            ...studentDetails,
+            studentId,
+            subject,
+            section,
+            otp,
+            latitude,
+            longitude,
+          });
+          setMessage(response.data.message);
+        } catch (error) {
+          if (error.response && error.response.data) {
+            setMessage(error.response.data.message);
+          } else {
+            setMessage("An unexpected error occurred.");
+          }
+        }
       });
     } else {
       alert('Geolocation is not supported by this browser.');
     }
   };
+  
 
   return (
     <div>
