@@ -35,22 +35,26 @@ const StudentLogin = () => {
     <div className='App'>
       <h1>Student Login</h1>
       <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <br />
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <br />
+        <div className="input-container">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <i className="zmdi zmdi-account zmdi-hc-lg"></i>
+        </div>
+        <div className="input-container">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <i className="zmdi zmdi-lock zmdi-hc-lg"></i>
+        </div>
         <button type="submit">Login</button>
       </form>
       {message && <p>{message}</p>}
