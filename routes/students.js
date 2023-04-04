@@ -59,7 +59,8 @@ router.post('/:studentId/submitAttendance', async (req, res) => {
       },
       { new: true, upsert: true }
     );
-
+    console(longitude)
+    console(latitude)
     res.status(200).json({ message: 'Attendance submitted successfully', student: updatedStudent });
   } catch (error) {
     console.error('Error submitting attendance:', error);
