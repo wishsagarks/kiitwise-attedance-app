@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './styles/SubmitAttendance.css'
 
 const SubmitAttendance = () => {
   const { studentId } = useParams();
@@ -62,18 +63,27 @@ const SubmitAttendance = () => {
     }
   };
   
+  const css_2 = {
+    position:'relative',
+    left:'35%',
+    color:'white'
+    }
+    const css_3 = {
 
+      color:'white'
+      }
   return (
-    <div>
+    <div className="student-login-wrapper">
+    <div className='App'>
       {student && <h1>Hello, {student.name}</h1>}
       <label>Subject:</label>
-      <select value={subject} onChange={handleSubjectChange}>
+      <select style={css_2} value={subject} onChange={handleSubjectChange}>
         <option value="">Select a subject</option>
         {student && student.subject.map((sub, index) => <option key={index} value={sub}>{sub}</option>)}
       </select>
       <br />
       <label>Section:</label>
-      <select value={section} onChange={handleSectionChange}>
+      <select style={css_2} value={section} onChange={handleSectionChange}>
         <option value="">Select a section</option>
         {student && student.section.map((sec, index) => <option key={index} value={sec}>{sec}</option>)}
       </select>
@@ -83,9 +93,29 @@ const SubmitAttendance = () => {
       <br />
       <button onClick={handleSubmitAttendance}>Submit Attendance</button>
       <br />
-      {message && <p>{message}</p>}
+      {message && <p style={css_3}>{message}</p>}
+    </div>
     </div>
   );
 };
 
-export default SubmitAttendance;
+const SubmitAttendanceWithBackground = (props) => {
+  const backgroundStyle = {
+    fontFamily: 'Dosis, sans-serif',
+    backgroundImage: 'linear-gradient(140deg, rgb(219, 98, 65) 0%, rgb(229, 91, 141) 100%)',
+    height: '100vh',
+    width:'100vw',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  return (
+    <div style={backgroundStyle}>
+      <SubmitAttendance {...props} />
+    </div>
+  );
+};
+
+export default SubmitAttendanceWithBackground;
