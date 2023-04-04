@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './styles/TeacherLogin.css'
+import Background from './Background';
 
 const SubmitAttendance = () => {
   const { studentId } = useParams();
@@ -62,20 +64,32 @@ const SubmitAttendance = () => {
     }
   };
   
+  const css_2 = {
+    position:'relative',
+    left:'35%',
+    color:'white'
+    }
+    const css_3 = {
+      position:'relative',
+      bottom:'1.5vh',
+      color:'white'
+      }
 
   return (
-    <div>
+    <Background>
+    <div className="teacher-login-wrapper">
+        <div className="App">
       {student && <h1>Hello, {student.name}</h1>}
-      <label>Subject:</label>
-      <select value={subject} onChange={handleSubjectChange}>
-        <option value="">Select a subject</option>
-        {student && student.subject.map((sub, index) => <option key={index} value={sub}>{sub}</option>)}
+      <label className="generate-otp-label">Subject:</label>
+      <select style={css_2} className="generate-otp-select" value={subject} onChange={handleSubjectChange}>        
+      <option style={{color:'black'}} value="">Select a subject</option>
+        {student && student.subject.map((sub, index) => <option style={{color:'black'}} key={index} value={sub}>{sub}</option>)}
       </select>
       <br />
-      <label>Section:</label>
-      <select value={section} onChange={handleSectionChange}>
-        <option value="">Select a section</option>
-        {student && student.section.map((sec, index) => <option key={index} value={sec}>{sec}</option>)}
+      <label className="generate-otp-label">Section:</label>
+      <select style={css_2} className="generate-otp-select" value={section} onChange={handleSectionChange}>        
+      <option style={{color:'black'}} value="">Select a section</option>
+        {student && student.section.map((sec, index) => <option style={{color:'black'}} key={index} value={sec}>{sec}</option>)}
       </select>
       <br />
       <label>OTP:</label>
@@ -83,9 +97,30 @@ const SubmitAttendance = () => {
       <br />
       <button onClick={handleSubmitAttendance}>Submit Attendance</button>
       <br />
-      {message && <p>{message}</p>}
+      {message && <p style={css_3}>{message}</p>}
+    </div>
+    </div>
+    </Background>
+  );
+};
+
+const SubmitAttendanceWithBackground = (props) => {
+  const backgroundStyle = {
+    fontFamily: 'Dosis, sans-serif',
+    backgroundImage: 'linear-gradient(140deg, rgb(219, 98, 65) 0%, rgb(229, 91, 141) 100%)',
+    height: '100vh',
+    width:'100vw',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  return (
+    <div style={backgroundStyle}>
+      <SubmitAttendance {...props} />
     </div>
   );
 };
 
-export default SubmitAttendance;
+export default SubmitAttendanceWithBackground;

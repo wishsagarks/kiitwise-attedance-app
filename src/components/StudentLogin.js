@@ -29,6 +29,12 @@ const StudentLogin = () => {
     }
   };
 
+    //New css by me
+const css_1 = {
+  color:'white'
+  }
+ 
+
   return (
     <div className="student-login-wrapper">
       
@@ -57,7 +63,7 @@ const StudentLogin = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p style={css_1}>{message}</p>}
     </div>
     </div>
   );
