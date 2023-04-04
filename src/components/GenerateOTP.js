@@ -52,17 +52,18 @@ const GenerateOTP = () => {
     }
   };
 
-  const css_1 = {
+  //New css by me
+const css_1 = {
 position:'relative',
 left:'35%',
 color:'white'
-  }
+}
 
-  const css_2 = {
-    position:'relative',
-    left:'35%',
-    color:'white'
-      }
+const css_2 = {
+position:'relative',
+left:'35%',
+color:'white'
+}
   
 
   return (
