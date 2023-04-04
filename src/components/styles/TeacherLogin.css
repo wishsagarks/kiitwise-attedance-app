@@ -117,7 +117,7 @@
 label {
   color: $light-gray;
 }
-/* Add this to TeacherLogin.css */
+/* GenerateOTP css */
 
 .generate-otp-wrapper {
   background-image: $gradient;

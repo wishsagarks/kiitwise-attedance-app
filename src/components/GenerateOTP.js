@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './styles/TeacherLogin.css'
+import Background from './Background';
 
 const GenerateOTP = () => {
   const { teacherId } = useParams();
@@ -52,40 +53,29 @@ const GenerateOTP = () => {
   };
 
   return (
-    <div className="generate-otp-wrapper">
-      <div className="App">
+    <Background>
+      <div className="teacher-login-wrapper">
+        <div className="App">
         {teacher && <h1>Hello, {teacher.name}</h1>}
-        <div className="select-container">
-          <label>Subject:</label>
-          <select value={subject} onChange={handleSubjectChange}>
-            <option value="">Select a subject</option>
-            {teacher &&
-              teacher.subject.map((sub) => (
-                <option key={sub} value={sub}>
-                  {sub}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="select-container">
-          <label>Section:</label>
-          <select value={section} onChange={handleSectionChange}>
-            <option value="">Select a section</option>
-            {teacher &&
-              teacher.section.map((sec) => (
-                <option key={sec} value={sec}>
-                  {sec}
-                </option>
-              ))}
-          </select>
-        </div>
-        <button onClick={handleGenerateOtp} className="otp-generate-btn">
-          Generate OTP
-        </button>
+        <label>Subject:</label>
+        <select value={subject} onChange={handleSubjectChange}>
+          <option value="">Select a subject</option>
+          {teacher && teacher.subject.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
+        </select>
+        <br />
+        <label>Section:</label>
+        <select value={section} onChange={handleSectionChange}>
+          <option value="">Select a section</option>
+          {teacher && teacher.section.map((sec) => <option key={sec} value={sec}>{sec}</option>)}
+        </select>
+        <br />
+        <button onClick={handleGenerateOtp}>Generate OTP</button>
         {otp && <p>Your OTP is: {otp}</p>}
         {message && <p>{message}</p>}
+      
       </div>
-    </div>
+      </div>
+    </Background>
   );
 };
 
