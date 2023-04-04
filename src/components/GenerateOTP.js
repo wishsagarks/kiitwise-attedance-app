@@ -52,27 +52,39 @@ const GenerateOTP = () => {
     }
   };
 
+  const css_1 = {
+position:'relative',
+left:'35%',
+color:'white'
+  }
+
+  const css_2 = {
+    position:'relative',
+    left:'35%',
+    color:'white'
+      }
+  
+
   return (
     <Background>
       <div className="teacher-login-wrapper">
         <div className="App">
         {teacher && <h1>Hello, {teacher.name}</h1>}
         <label>Subject:</label>
-        <select value={subject} onChange={handleSubjectChange}>
-          <option value="">Select a subject</option>
-          {teacher && teacher.subject.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
+        <select style={css_1} value={subject} onChange={handleSubjectChange}>
+          <option style={{color:'black'}} value="">Select a subject</option>
+          {teacher && teacher.subject.map((sub) => <option style={{color:'black'}} key={sub} value={sub}>{sub}</option>)}
         </select>
         <br />
         <label>Section:</label>
-        <select value={section} onChange={handleSectionChange}>
-          <option value="">Select a section</option>
-          {teacher && teacher.section.map((sec) => <option key={sec} value={sec}>{sec}</option>)}
+        <select style={css_2} value={section} onChange={handleSectionChange}>
+          <option style={{color:'black'}} value="">Select a section</option>
+          {teacher && teacher.section.map((sec) => <option style={{color:'black'}} key={sec} value={sec}>{sec}</option>)}
         </select>
         <br />
         <button onClick={handleGenerateOtp}>Generate OTP</button>
-        {otp && <p>Your OTP is: {otp}</p>}
-        {message && <p>{message}</p>}
-      
+        {otp && <p style={{color:'white'}}>Your OTP is: {otp}</p>}
+        {message && <p style={{color:'white'}}>{message}</p>}
       </div>
       </div>
     </Background>
