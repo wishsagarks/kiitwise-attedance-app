@@ -5,14 +5,13 @@ import GenerateOTP from './components/GenerateOTP';
 import StudentLogin from './components/StudentLogin';
 import SubmitAttendanceWithBackground from './components/SubmitAttendance';
 import NotFound from './components/NotFound';
-import LandingPage from './components/Landing/LandingPage'
+
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/"                            element={<LandingPage/>}/>
           <Route path="/teacherLogin"                element={<TeacherLogin />} />
           <Route path="/generateOTP/:teacherId"      element={<GenerateOTP />} />
           <Route path="/studentLogin"                element={<StudentLogin />} />
