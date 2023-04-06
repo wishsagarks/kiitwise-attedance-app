@@ -106,7 +106,7 @@ color:'white'
     <Background>
       <div className="teacher-login-wrapper">
         <div className="App">
-        {teacher && <h1>Hello, {teacher.name}</h1>}
+        {teacher && <h1 style={{position:'relative',top:'7.5px'}}>Hello, {teacher.name}</h1>}
         <label>Subject:</label>
         <select style={css_1} value={subject} onChange={handleSubjectChange}>
           <option style={{color:'black'}} value="">Select a subject</option>
@@ -119,11 +119,11 @@ color:'white'
           {teacher && teacher.section.map((sec) => <option style={{color:'black'}} key={sec} value={sec}>{sec}</option>)}
         </select>
         <br />
-        <button onClick={handleGenerateOtp}>Generate OTP</button>
+        <button style={{position:'relative',top:'-24.5px'}} onClick={handleGenerateOtp}>Generate OTP</button>
         {otp && <p style={{color:'white'}}>Your OTP is: {otp}</p>}
         {message && <p style={{color:'white'}}>{message}</p>}
         <br/>
-        <button onClick={handleExportAttendance}>Export Attendance</button>
+        <button style={{position:'relative',top:'-40.5px'}} onClick={handleExportAttendance}>Export Attendance</button>
       </div>
       </div>
     </Background>
