@@ -35,6 +35,9 @@ const teacherSchema = new mongoose.Schema({
     type: Number,
     default: null,
   },
+  otpCreatedAt:{
+    type:Date,
+  },
 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);

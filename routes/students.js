@@ -36,7 +36,13 @@ router.post('/:studentId/submitAttendance', async (req, res) => {
     if (!teacher) {
       return res.status(400).json({ message: 'Invalid OTP' }); // Change the status code here to 400
     }
+// Add this code to check if the OTP is still valid
+const now = new Date();
+const otpValidUntil = new Date(teacher.otpCreatedAt.getTime() + 2 * 60 * 1000);
 
+if (now > otpValidUntil) {
+  return res.status(400).json({ message: 'OTP has expired' });
+}
     // Check if the student is within 5 memeter of the teacher
     const distance = getDistance(latitude, longitude, teacher.latitude, teacher.longitude);
     if (distance > 5) {

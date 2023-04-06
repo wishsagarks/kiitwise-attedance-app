@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import './styles/TeacherLogin.css'
 import Background from './Background';
 
+
+
 const GenerateOTP = () => {
   const { teacherId } = useParams();
   const [teacher, setTeacher] = useState(null);
@@ -52,6 +54,40 @@ const GenerateOTP = () => {
     }
   };
 
+  const handleExportAttendance = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
+        responseType: 'blob', // set responseType to 'blob' to get the response as a Blob object
+      });
+  
+      const blob = new Blob([response.data], { type: 'text/csv' });
+  
+      // Request a file system from the browser
+      window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+      window.requestFileSystem(window.TEMPORARY, 1024 * 1024, (fs) => {
+        // Create a file in the file system
+        fs.root.getFile('attendance.csv', { create: true }, (fileEntry) => {
+          // Write the CSV data to the file
+          fileEntry.createWriter((fileWriter) => {
+            fileWriter.onwriteend = () => {
+              // Show a confirmation message to the user
+              console.log('CSV file saved');
+            };
+  
+            fileWriter.write(blob);
+          });
+        });
+      }, (error) => {
+        console.error('Error requesting file system:', error);
+      });
+    } catch (error) {
+      console.error('Error exporting attendance:', error);
+    }
+  };
+  
+  
+  
+
   //New css by me
 const css_1 = {
 position:'relative',
@@ -86,6 +122,8 @@ color:'white'
         <button onClick={handleGenerateOtp}>Generate OTP</button>
         {otp && <p style={{color:'white'}}>Your OTP is: {otp}</p>}
         {message && <p style={{color:'white'}}>{message}</p>}
+        <br/>
+        <button onClick={handleExportAttendance}>Export Attendance</button>
       </div>
       </div>
     </Background>
