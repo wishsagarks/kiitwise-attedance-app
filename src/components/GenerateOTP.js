@@ -57,33 +57,25 @@ const GenerateOTP = () => {
   const handleExportAttendance = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
-        responseType: 'blob', // set responseType to 'blob' to get the response as a Blob object
+        responseType: 'blob', //line to specify the response type as 'blob'
       });
   
-      const blob = new Blob([response.data], { type: 'text/csv' });
-  
-      // Request a file system from the browser
-      window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-      window.requestFileSystem(window.TEMPORARY, 1024 * 1024, (fs) => {
-        // Create a file in the file system
-        fs.root.getFile('attendance.csv', { create: true }, (fileEntry) => {
-          // Write the CSV data to the file
-          fileEntry.createWriter((fileWriter) => {
-            fileWriter.onwriteend = () => {
-              // Show a confirmation message to the user
-              console.log('CSV file saved');
-            };
-  
-            fileWriter.write(blob);
-          });
-        });
-      }, (error) => {
-        console.error('Error requesting file system:', error);
-      });
+      //  link element and trigger a click event to download the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'attendance.csv');
+      document.body.appendChild(link);
+      link.click();
     } catch (error) {
-      console.error('Error exporting attendance:', error);
+      if (error.response && error.response.data) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
     }
   };
+  
   
   
   

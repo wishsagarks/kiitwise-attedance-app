@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const TeacherCredentials = require('../models/TeacherCredentials');
 const Teacher = require('../models/teacher');
 const Student = require('../models/student');
+const Papa = require('papaparse');
 
 
 router.get('/details/:teacherId', async (req, res) => {
@@ -77,31 +77,20 @@ router.get('/:teacherId/exportAttendance', async (req, res) => {
       attendance: student.attendance,
     }));
 
-    const csvWriter = createCsvWriter({
-      path: 'attendance.csv',
-      header: [
-        { id: 'studentId', title: 'Student ID' },
-        { id: 'name', title: 'Name' },
-        { id: 'email', title: 'Email' },
-        { id: 'subject', title: 'Subject' },
-        { id: 'section', title: 'Section' },
-        { id: 'attendance', title: 'Attendance' },
-      ],
+    const csvContent = Papa.unparse({
+      fields: ['studentId', 'name', 'email', 'subject', 'section', 'attendance'],
+      data: attendanceData,
     });
 
-    await csvWriter.writeRecords(attendanceData);
-
-    const fileName = 'attendance.csv';
-    res.download(fileName, fileName, (err) => {
-      if (err) {
-        res.status(500).send('Error downloading the file');
-      }
-    });
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=attendance.csv');
+    res.send(csvContent);
   } catch (error) {
     console.error('Error exporting attendance:', error);
     res.status(500).send('Error exporting attendance');
   }
 });
+
 
 
         

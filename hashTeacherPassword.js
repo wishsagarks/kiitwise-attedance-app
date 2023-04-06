@@ -20,7 +20,7 @@ const teachers = [
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
     password: 'janepassword',
-    subject: ['Chemistry', 'Biology'],
+    subject: ['Math','Chemistry', 'Biology'],
     section: ['A', 'C'],
   },
 ];
