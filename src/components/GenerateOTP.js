@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import './styles/TeacherLogin.css'
 import Background from './Background';
 
+
 const GenerateOTP = () => {
   const { teacherId } = useParams();
   const [teacher, setTeacher] = useState(null);
@@ -52,6 +53,26 @@ const GenerateOTP = () => {
     }
   };
 
+  const handleExportAttendance = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
+        responseType: 'blob', // set responseType to 'blob' to get the response as a Blob object
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'text/csv' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'attendance.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error exporting attendance:', error);
+    }
+  };
+  
+  
+
   //New css by me
 const css_1 = {
 position:'relative',
@@ -86,6 +107,8 @@ color:'white'
         <button onClick={handleGenerateOtp}>Generate OTP</button>
         {otp && <p style={{color:'white'}}>Your OTP is: {otp}</p>}
         {message && <p style={{color:'white'}}>{message}</p>}
+        <br/>
+        <button onClick={handleExportAttendance}>Export Attendance</button>
       </div>
       </div>
     </Background>
