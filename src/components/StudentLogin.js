@@ -37,7 +37,6 @@ const css_1 = {
 
   return (
     <div className="student-login-wrapper">
-      
     <div className='App'>
       <h1>Student Login</h1>
       <form onSubmit={handleSubmit}>

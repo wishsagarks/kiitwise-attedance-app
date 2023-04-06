@@ -79,7 +79,7 @@ const SubmitAttendance = () => {
     <Background>
     <div className="teacher-login-wrapper">
         <div className="App">
-      {student && <h1>Hello, {student.name}</h1>}
+      {student && <h1 style={{position:'relative',top:'13.5px'}} >Hello, {student.name}</h1>}
       <label className="generate-otp-label">Subject:</label>
       <select style={css_2} className="generate-otp-select" value={subject} onChange={handleSubjectChange}>        
       <option style={{color:'black'}} value="">Select a subject</option>
@@ -95,7 +95,7 @@ const SubmitAttendance = () => {
       <label>OTP:</label>
       <input type="text" value={otp} onChange={handleOtpChange} />
       <br />
-      <button onClick={handleSubmitAttendance}>Submit Attendance</button>
+      <button style={{position:'relative',top:'-20.5px'}} onClick={handleSubmitAttendance}>Submit Attendance</button>
       <br />
       {message && <p style={css_3}>{message}</p>}
     </div>
