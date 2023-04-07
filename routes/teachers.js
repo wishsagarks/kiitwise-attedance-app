@@ -59,37 +59,45 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
 // Route handler to export attendance list
 router.get('/:teacherId/exportAttendance', async (req, res) => {
   try {
-    const { teacherId } = req.params;
+    const teacherId = req.params.teacherId;
     const teacher = await Teacher.findOne({ teacherId });
 
     if (!teacher) {
       return res.status(404).json({ message: 'Teacher not found' });
     }
 
-    const students = await Student.find({ subject: teacher.subject, section: teacher.section });
+    const students = await Student.find({
+      'subject': teacher.subject,
+      'section': teacher.section,
+      'otp': teacher.otp,
+    });
 
-    const attendanceData = students.map((student) => ({
-      studentId: student.studentId,
+    const records = students.map((student) => ({
       name: student.name,
       email: student.email,
-      subject: student.subject,
-      section: student.section,
-      attendance: student.attendance,
+      studentId: student.studentId,
+      attendance:'P',
     }));
 
     const csvContent = Papa.unparse({
-      fields: ['studentId', 'name', 'email', 'subject', 'section', 'attendance'],
-      data: attendanceData,
+      fields: ['Teacher Name', 'Subject', 'Section', ...Object.keys(records[0])],
+      data: [
+        [teacher.name, teacher.subject, teacher.section, '', '', '', ''],
+        ...records.map((record) => ['', '', '', ...Object.values(record)]),
+      ],
     });
 
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename=attendance.csv');
-    res.send(csvContent);
+    res.status(200).send(csvContent);
   } catch (error) {
     console.error('Error exporting attendance:', error);
-    res.status(500).send('Error exporting attendance');
+    res.status(500).json({ message: 'Error exporting attendance', error });
   }
 });
+
+
+
 
 
 
