@@ -57,14 +57,17 @@ const GenerateOTP = () => {
   const handleExportAttendance = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
-        responseType: 'blob', //line to specify the response type as 'blob'
+        responseType: 'blob',
       });
   
-      //  link element and trigger a click event to download the file
+      // Read the custom header
+      const filename = response.headers['x-filename'] || 'attendance.csv';
+  
+      // Create a link element and trigger a click event to download the file
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'attendance.csv');
+      link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -75,6 +78,7 @@ const GenerateOTP = () => {
       }
     }
   };
+  
   
   
   

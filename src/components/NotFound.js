@@ -3,6 +3,7 @@ import './styles/NotFound.css';
 
 const NotFound = () => {
     return (
+      <div className='not-found-container' > 
         <div className="NotFound">
             <div className="number">404</div>
             
@@ -18,6 +19,7 @@ const NotFound = () => {
                 rel="noopener noreferrer"
             >
             </a>
+        </div>
         </div>
     );
 };

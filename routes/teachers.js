@@ -76,31 +76,22 @@ router.get('/:teacherId/exportAttendance', async (req, res) => {
       name: student.name,
       email: student.email,
       studentId: student.studentId,
-      attendance:'P',
+      attendance: 'P',
     }));
 
-    const csvContent = Papa.unparse({
-      fields: ['Teacher Name', 'Subject', 'Section', ...Object.keys(records[0])],
-      data: [
-        [teacher.name, teacher.subject, teacher.section, '', '', '', ''],
-        ...records.map((record) => ['', '', '', ...Object.values(record)]),
-      ],
-    });
+    const csvContent = Papa.unparse(records);
 
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename=attendance.csv');
+    res.setHeader('X-Filename', `${teacher.subject}-${teacher.section}.csv`);
     res.status(200).send(csvContent);
+    
   } catch (error) {
     console.error('Error exporting attendance:', error);
     res.status(500).json({ message: 'Error exporting attendance', error });
   }
 });
 
+module.exports = router;
 
-
-
-
-
-        
-        module.exports = router;
         

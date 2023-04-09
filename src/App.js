@@ -5,7 +5,7 @@ import GenerateOTP from './components/GenerateOTP';
 import StudentLogin from './components/StudentLogin';
 import SubmitAttendanceWithBackground from './components/SubmitAttendance';
 import NotFound from './components/NotFound';
-import LandingPage from './components/LandingPage/App.jsx'
+import LandingPage from './components/Landing Page/LandingPage'
 
 function App() {
   return (
