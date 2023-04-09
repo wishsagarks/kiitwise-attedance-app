@@ -1,24 +1,23 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import GenerateOTP from "./components/GenerateOTP";
-import SubmitAttendance from "./components/SubmitAttendance";
-import TeacherLogin from "./components/TeacherLogin";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import TeacherLogin from './components/TeacherLogin';
+import GenerateOTP from './components/GenerateOTP';
 import StudentLogin from './components/StudentLogin';
+import SubmitAttendanceWithBackground from './components/SubmitAttendance';
 import NotFound from './components/NotFound';
-
+import LandingPage from './components/Landing Page/LandingPage'
 
 function App() {
   return (
     <Router>
-
-      <div>
+      <div className="App">
         <Routes>
-          <Route path="/teacherLogin" element={<TeacherLogin></TeacherLogin>} />
-          <Route path="/student-login" element={<StudentLogin></StudentLogin>} />
-          <Route path="/generateOTP" element={<GenerateOTP></GenerateOTP>} />
-        <Route path="/submitAttendance" element={<SubmitAttendance></SubmitAttendance>} />
-        <Route path="/student-login" element={<StudentLogin></StudentLogin>} />
-        <Route path="*" element={<NotFound></NotFound>} />
+          <Route path="/"                            element={<LandingPage />} />
+          <Route path="/teacherLogin"                element={<TeacherLogin />} />
+          <Route path="/generateOTP/:teacherId"      element={<GenerateOTP />} />
+          <Route path="/studentLogin"                element={<StudentLogin />} />
+          <Route path="/submitAttendance/:studentId" element={<SubmitAttendanceWithBackground />} />
+          <Route path="*"                            element={<NotFound></NotFound>} />
         </Routes>
       </div>
     </Router>

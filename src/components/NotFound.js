@@ -1,13 +1,27 @@
-
 import React from 'react';
+import './styles/NotFound.css';
 
 const NotFound = () => {
-  return (
-    <div>
-      <h1>404 Eroro:Page Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
-    </div>
-  );
+    return (
+      <div className='not-found-container' > 
+        <div className="NotFound">
+            <div className="number">404</div>
+            
+            <div className="text">
+                <span>Ooops...</span>
+                <br />
+                page not found
+            </div>
+            <a
+                className="me"
+                href="https://codepen.io/uzcho_/pens/popular/?grid_type=list"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+            </a>
+        </div>
+        </div>
+    );
 };
 
 export default NotFound;
