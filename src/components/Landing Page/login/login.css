@@ -118,13 +118,6 @@
   .advertisers-service-sec .service-card:hover p {
     color: #f0f0f0;
   }
-
-  .flex{
-display:'flex';
-  }
-
-  @media screen and (max-width:'450px') {
-    .flex{
-        display: block;
-    }
-  }
+.boxshadow{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

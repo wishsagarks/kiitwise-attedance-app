@@ -18,7 +18,7 @@ export const Login = (props) => {
     </div>
     <div class="row mt-5 mt-md-4 row-cols-1 row-cols-sm-1 row-cols-md-3 justify-content-center" style={{display:'flex'}}>
       <div class="col" >
-        <div class="service-card">
+        <div class="service-card boxshadow">
       
           <h3>Login for teachers</h3>
           <p>
