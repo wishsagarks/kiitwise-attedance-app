@@ -1,7 +1,7 @@
 {
   "Header": {
-    "title": "We are a Landing Page",
-    "paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sed commodo nibh ante facilisis bibendum."
+    "title": "KIITWISE",
+    "paragraph": "Your Gateway to a Smarter Future"
   },
   "About": {
     "paragraph": "This project is an innovative attendance management system that leverages geolocation technology to ensure a secure and accurate attendance recording process. It streamlines the attendance process for both teachers and students in educational institutions. The system allows teachers to generate a unique One-Time Password (OTP) for each class session, which students must enter within a specified time limit to confirm their attendance. To further enhance the security and accuracy of the system, students must be within a certain proximity to the teacher's location when submitting their attendance. By utilizing this modern approach, the attendance management system offers a convenient, efficient, and reliable solution for tracking student attendance in a digital era.",
@@ -68,33 +68,33 @@
   "Services": [
     {
       "icon": "fa fa-wordpress",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Teacher Authentication",
+      "text": "Securely sign in and manage teacher accounts, ensuring that only authorized users can access the system."
     },
     {
       "icon": "fa fa-cart-arrow-down",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Student Verification",
+      "text": "Verify the identity of students and maintain accurate attendance records by generating OTPs and matching them with the registered students."
     },
     {
       "icon": "fa fa-cloud-download",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Attendance Tracking",
+      "text": "Automatically track and record student attendance, providing an organized and efficient way to manage attendance data."
     },
     {
       "icon": "fa fa-language",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Geolocation-based Attendance",
+      "text": "Utilize geolocation technology to confirm the physical presence of students during attendance sessions, reducing the risk of fraudulent attendance."
     },
     {
       "icon": "fa fa-plane",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Export Attendance Data",
+      "text": "Easily download and save attendance data as CSV files, enabling teachers to analyze, share, and store the information for future reference."
     },
     {
       "icon": "fa fa-pie-chart",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Customizable Class Settings",
+      "text": "Manage class settings, such as subject and section, allowing teachers to tailor the attendance process to their specific courses and students."
     }
   ],
   "Testimonials": [
