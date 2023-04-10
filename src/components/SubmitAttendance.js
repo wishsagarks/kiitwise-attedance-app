@@ -14,7 +14,7 @@ const SubmitAttendance = () => {
 
   useEffect(() => {
     const fetchStudent = async () => {
-      const response = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
+      const response = await axios.get(`${process.env.WORKINGPORT}/api/students/details/${studentId}`);
       setStudent(response.data);
     };
 
@@ -39,9 +39,9 @@ const SubmitAttendance = () => {
         const { latitude, longitude } = position.coords;
   
         try {
-          const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
+          const studentDetailsResponse = await axios.get(`${process.env.WORKINGPORT}/api/students/details/${studentId}`);
           const studentDetails = studentDetailsResponse.data;
-          const response = await axios.post(`http://localhost:5000/api/students/${studentId}/submitAttendance`, {
+          const response = await axios.post(`${process.env.WORKINGPORT}/api/students/${studentId}/submitAttendance`, {
             ...studentDetails,
             studentId,
             subject,

@@ -16,7 +16,7 @@ const GenerateOTP = () => {
 
   useEffect(() => {
     const fetchTeacher = async () => {
-      const response = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
+      const response = await axios.get(`${process.env.WORKINGPORT}/api/teachers/details/${teacherId}`);
       setTeacher(response.data);
     };
 
@@ -35,10 +35,10 @@ const GenerateOTP = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
-        const teacherDetailsResponse = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
+        const teacherDetailsResponse = await axios.get(`${process.env.WORKINGPORT}/api/teachers/details/${teacherId}`);
         const teacherDetails = teacherDetailsResponse.data;
 
-        const response = await axios.patch(`http://localhost:5000/api/teachers/${teacherId}/generateOTP`, {
+        const response = await axios.patch(`${process.env.WORKINGPORT}/api/teachers/${teacherId}/generateOTP`, {
           ...teacherDetails,
           subject,
           section,
@@ -56,7 +56,7 @@ const GenerateOTP = () => {
 
   const handleExportAttendance = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
+      const response = await axios.get(`${process.env.WORKINGPORT}/api/teachers/${teacherId}/exportAttendance`, {
         responseType: 'blob',
       });
   
