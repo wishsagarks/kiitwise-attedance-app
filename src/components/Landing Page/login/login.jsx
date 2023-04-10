@@ -1,7 +1,6 @@
 import React from "react";
 import './login.css'
-import { NavLink } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 export const Login = (props) => {
 
     return(
@@ -21,19 +20,13 @@ export const Login = (props) => {
         <div class="service-card boxshadow">
       
           <h3>Login for teachers</h3>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Quisquam consequatur necessitatibus eaque.
-          </p>
+          <button type="button" class="btn btn-primary"> <Link to="/teacherLogin" style={{ color: "inherit", textDecoration: "none" }}>LOGIN</Link></button>
         </div>
       </div>
       <div class="col">
         <div class="service-card">
           <h3>Login for students</h3>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Quisquam consequatur necessitatibus eaque.
-          </p>
+          <button type="button" class="btn btn-primary "> <Link to="/studentLogin" style={{ color: "inherit", textDecoration: "none" }}>LOGIN</Link></button>
         </div>
       </div>
       </div>
