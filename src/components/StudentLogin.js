@@ -11,7 +11,6 @@ const StudentLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post('http://localhost:5000/api/studentLogin/login', {
         email,
