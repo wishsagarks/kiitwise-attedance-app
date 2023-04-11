@@ -53,13 +53,11 @@ const GenerateOTP = () => {
       alert('Geolocation is not supported by this browser.');
     }
   };
-
   const handleExportAttendance = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
         responseType: 'blob',
       });
-  
       // Read the custom header
       const filename = response.headers['x-filename'] || 'attendance.csv';
   
