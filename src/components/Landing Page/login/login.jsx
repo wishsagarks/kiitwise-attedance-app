@@ -7,11 +7,11 @@ export const Login = (props) => {
     return(
         <>
 <section id="advertisers" class="advertisers-service-sec pt-5 pb-5">
-  <div class="container">
+  <div class="container ">
     <div class="row">
       <div class="section-header text-center">
         <h2 class="fw-bold fs-1">
-          <span class="b-class-secondary">Authentication</span>
+          <span class="b-class-secondary new">Authentication</span>
           <p>KIITwise: Smart attendance management for KIIT, powered by SAP</p>
         </h2>
       </div>
@@ -21,7 +21,7 @@ export const Login = (props) => {
         <div class="service-card boxshadow">
       
           <h3>Login for teachers</h3>
-          <p>
+          <p className="para">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
             Quisquam consequatur necessitatibus eaque.
           </p>
@@ -30,7 +30,7 @@ export const Login = (props) => {
       <div class="col">
         <div class="service-card">
           <h3>Login for students</h3>
-          <p>
+          <p className="para">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
             Quisquam consequatur necessitatibus eaque.
           </p>

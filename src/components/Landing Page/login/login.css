@@ -16,6 +16,13 @@
     width: 50px;
   }
   
+  @media screen and (max-width:'500px') {
+    .para{
+      display: none;
+    }
+  }
+
+  
   .sec-icon::after {
     content: "";
     position: absolute;
