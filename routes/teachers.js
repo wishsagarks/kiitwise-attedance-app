@@ -77,7 +77,7 @@ router.get('/:teacherId/exportAttendance', async (req, res) => {
       name: student.name,
       email: student.email,
       studentId: student.studentId,
-      attendance: presentStudents.includes(student) ? 'P' : 'A',
+      attendance: 'P',
     }));
 
     const csvContent = Papa.unparse(records);
