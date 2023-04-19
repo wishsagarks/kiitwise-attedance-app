@@ -4,6 +4,8 @@ const TeacherCredentials = require('../models/TeacherCredentials');
 const Teacher = require('../models/teacher');
 const Student = require('../models/student');
 const Papa = require('papaparse');
+const Attendance = require('../models/Attendance');
+
 
 
 router.get('/details/:teacherId', async (req, res) => {
@@ -23,7 +25,7 @@ router.get('/details/:teacherId', async (req, res) => {
 router.patch('/:teacherId/generateOTP', async (req, res) => {
   try {
     const teacherId = req.params.teacherId;
-    const { subject, section, otp, latitude, longitude } = req.body;
+    const { subject, section, latitude, longitude } = req.body;
 
     // Find the teacher's credentials by teacherId
     const teacherCredential = await TeacherCredentials.findOne({ teacherId });
@@ -32,7 +34,7 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
       return res.status(404).json({ message: 'Teacher not found' });
     }
 
-    // Update the existing Teacher document with the new otp and location
+    // Update the existing Teacher document with the new location
     const updatedTeacher = await Teacher.findOneAndUpdate(
       { teacherId },
       {
@@ -41,21 +43,20 @@ router.patch('/:teacherId/generateOTP', async (req, res) => {
         teacherId,
         subject,
         section,
-        otp,
         longitude,
         latitude,
-        otpCreatedAt: new Date(),
+        locationUpdatedAt: new Date(),
       },
       { new: true, upsert: true }
     );
-
-    res.status(200).json({ message: 'OTP generated successfully', otp, teacher: updatedTeacher });
+console.log(longitude);
+console.log(latitude);
+    res.status(200).json({ message: 'Location saved successfully', teacher: updatedTeacher });
   } catch (error) {
-    console.error('Error generating OTP:', error);
-    res.status(500).json({ message: 'Error generating OTP', error });
+    console.error('Error saving location:', error);
+    res.status(500).json({ message: 'Error saving location', error });
   }
 });
-
 // Route handler to export attendance list
 router.get('/:teacherId/exportAttendance', async (req, res) => {
   try {
@@ -66,17 +67,17 @@ router.get('/:teacherId/exportAttendance', async (req, res) => {
       return res.status(404).json({ message: 'Teacher not found' });
     }
 
-    const students = await Student.find({
-      'subject': teacher.subject,
-      'section': teacher.section,
-      'otp': teacher.otp,
-    });
+    const studentsInSection = await Student.find({ 'subject': teacher.subject, 'section': teacher.section });
+    const presentStudents = studentsInSection.filter(student => student.attendance);
 
-    const records = students.map((student) => ({
+    const allStudents = await Student.find({});
+    const absentStudents = allStudents.filter(student => !presentStudents.includes(student));
+
+    const records = studentsInSection.map((student) => ({
       name: student.name,
       email: student.email,
       studentId: student.studentId,
-      attendance: 'P',
+      attendance: presentStudents.includes(student) ? 'P' : 'A',
     }));
 
     const csvContent = Papa.unparse(records);
@@ -85,12 +86,13 @@ router.get('/:teacherId/exportAttendance', async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=attendance.csv');
     res.setHeader('X-Filename', `${teacher.subject}-${teacher.section}.csv`);
     res.status(200).send(csvContent);
-    
+
   } catch (error) {
     console.error('Error exporting attendance:', error);
     res.status(500).json({ message: 'Error exporting attendance', error });
   }
 });
+
 
 module.exports = router;
 

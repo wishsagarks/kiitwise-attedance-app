@@ -9,7 +9,7 @@ const SubmitAttendance = () => {
   const [student, setStudent] = useState(null);
   const [subject, setSubject] = useState('');
   const [section, setSection] = useState('');
-  const [otp, setOtp] = useState('');
+  
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -29,15 +29,13 @@ const SubmitAttendance = () => {
     setSection(e.target.value);
   };
 
-  const handleOtpChange = (e) => {
-    setOtp(e.target.value);
-  };
+ 
 
   const handleSubmitAttendance = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
-  
+
         try {
           const studentDetailsResponse = await axios.get(`http://localhost:5000/api/students/details/${studentId}`);
           const studentDetails = studentDetailsResponse.data;
@@ -46,23 +44,20 @@ const SubmitAttendance = () => {
             studentId,
             subject,
             section,
-            otp,
             latitude,
             longitude,
           });
           setMessage(response.data.message);
         } catch (error) {
-          if (error.response && error.response.data) {
-            setMessage(error.response.data.message);
-          } else {
-            setMessage("An unexpected error occurred.");
-          }
+          console.error('Error submitting attendance:', error);
+          setMessage('Error submitting attendance');
         }
       });
     } else {
       alert('Geolocation is not supported by this browser.');
     }
   };
+  
   
   const css_2 = {
     position:'relative',
@@ -92,8 +87,6 @@ const SubmitAttendance = () => {
         {student && student.section.map((sec, index) => <option style={{color:'black'}} key={index} value={sec}>{sec}</option>)}
       </select>
       <br />
-      <label>OTP:</label>
-      <input type="text" value={otp} onChange={handleOtpChange} />
       <br />
       <button style={{position:'relative',top:'-20.5px'}} onClick={handleSubmitAttendance}>Submit Attendance</button>
       <br />

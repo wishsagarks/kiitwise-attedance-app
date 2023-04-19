@@ -11,7 +11,6 @@ const GenerateOTP = () => {
   const [teacher, setTeacher] = useState(null);
   const [subject, setSubject] = useState('');
   const [section, setSection] = useState('');
-  const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -37,23 +36,20 @@ const GenerateOTP = () => {
         const { latitude, longitude } = position.coords;
         const teacherDetailsResponse = await axios.get(`http://localhost:5000/api/teachers/details/${teacherId}`);
         const teacherDetails = teacherDetailsResponse.data;
-
+  
         const response = await axios.patch(`http://localhost:5000/api/teachers/${teacherId}/generateOTP`, {
           ...teacherDetails,
           subject,
           section,
-          otp: Math.floor(100000 + Math.random() * 900000).toString(),
           latitude,
           longitude,
         });
-        setOtp(response.data.otp);
         setMessage(response.data.message);
       });
     } else {
       alert('Geolocation is not supported by this browser.');
     }
   };
-
   const handleExportAttendance = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/teachers/${teacherId}/exportAttendance`, {
@@ -78,11 +74,6 @@ const GenerateOTP = () => {
       }
     }
   };
-  
-  
-  
-  
-  
 
   //New css by me
 const css_1 = {
@@ -115,8 +106,7 @@ color:'white'
           {teacher && teacher.section.map((sec) => <option style={{color:'black'}} key={sec} value={sec}>{sec}</option>)}
         </select>
         <br />
-        <button style={{position:'relative',top:'-24.5px'}} onClick={handleGenerateOtp}>Generate OTP</button>
-        {otp && <p style={{color:'white'}}>Your OTP is: {otp}</p>}
+        <button style={{position:'relative',top:'-24.5px'}} onClick={handleGenerateOtp}>Save Location</button> 
         {message && <p style={{color:'white'}}>{message}</p>}
         <br/>
         <button style={{position:'relative',top:'-40.5px'}} onClick={handleExportAttendance}>Export Attendance</button>

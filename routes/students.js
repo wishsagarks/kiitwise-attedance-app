@@ -21,31 +21,25 @@ router.get('/details/:studentId', async (req, res) => {
 router.post('/:studentId/submitAttendance', async (req, res) => {
   try {
     const studentId = req.params.studentId;
-    const { subject, section, otp, latitude, longitude } = req.body;
-
+    const { subject, section, latitude, longitude } = req.body;
+console.log(longitude);
+console.log(latitude);
     // Find the student's credentials by studentId
     const studentCredential = await StudentCredentials.findOne({ studentId });
 
     if (!studentCredential) {
       return res.status(404).json({ message: 'Student not found' });
     }
-
-    // Find the teacher by subject, section and otp
-    const teacher = await Teacher.findOne({ subject, section, otp });
+    // Find the teacher by subject and section
+    const teacher = await Teacher.findOne({ subject, section });
 
     if (!teacher) {
-      return res.status(400).json({ message: 'Invalid OTP' }); // Change the status code here to 400
+      return res.status(400).json({ message: 'Invalid teacher' });
     }
-// Add this code to check if the OTP is still valid
-const now = new Date();
-const otpValidUntil = new Date(teacher.otpCreatedAt.getTime() + 2 * 60 * 1000);
 
-if (now > otpValidUntil) {
-  return res.status(400).json({ message: 'OTP has expired' });
-}
-    // Check if the student is within 5 memeter of the teacher
+    // Check if the student is within 35 meters of the teacher
     const distance = getDistance(latitude, longitude, teacher.latitude, teacher.longitude);
-    if (distance > 5) {
+    if (distance > 350) {
       return res.status(400).json({ message: 'You are too far from the teacher. Attendance not submitted.' });
     }
 
@@ -58,14 +52,13 @@ if (now > otpValidUntil) {
         studentId,
         subject,
         section,
-        otp,
         longitude,
         latitude,
         attendance: true,
       },
       { new: true, upsert: true }
     );
-   
+
     res.status(200).json({ message: 'Attendance submitted successfully', student: updatedStudent });
   } catch (error) {
     console.error('Error submitting attendance:', error);
