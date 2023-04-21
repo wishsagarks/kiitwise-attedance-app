@@ -16,12 +16,12 @@ const students = [
     section: ['A', 'B'],
   },
   {
-    studentId: 'S102',
-    name: 'Bob Smith',
-    email: 'bob.smith@example.com',
-    password: 'bobpassword',
-    subject: ['Math','Chemistry', 'Biology'],
-    section: ['A', 'C'],
+    studentId: 'WISH',
+    name: 'SAGAR SATAPATHY',
+    email: '2005261@kiit.ac.in',
+    password: 'KIIT2024',
+    subject: ['SPM','Chemistry', 'Biology'],
+    section: ['CSE-17', 'C'],
   },
   {
     studentId: 'S103',

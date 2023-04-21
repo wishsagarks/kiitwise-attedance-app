@@ -16,12 +16,12 @@ const teachers = [
     section: ['A', 'B'],
   },
   {
-    teacherId: 'T102',
-    name: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    password: 'janepassword',
-    subject: ['Math','Chemistry', 'Biology'],
-    section: ['A', 'C'],
+    teacherId: 'TNP',
+    name: 'KUMAR DEVDUTTA',
+    email: 'kumardevduttafcs@kiit.ac.in',
+    password: 'KIIT2024',
+    subject: ['SPM','Chemistry', 'Biology'],
+    section: ['CSE-17', 'C'],
   },
 ];
 
